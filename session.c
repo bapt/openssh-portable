@@ -323,11 +323,13 @@ do_authenticated(struct ssh *ssh, Authctxt *authctxt)
 		channel_disable_admin(ssh, FORWARD_LOCAL);
 		channel_disable_admin(ssh, FORWARD_REMOTE);
 	} else {
-		if ((options.allow_tcp_forwarding & FORWARD_LOCAL) == 0)
+		if ((options.allow_tcp_forwarding & FORWARD_LOCAL) == 0 &&
+		    (options.allow_streamlocal_forwarding & FORWARD_LOCAL) == 0)
 			channel_disable_admin(ssh, FORWARD_LOCAL);
 		else
 			channel_permit_all(ssh, FORWARD_LOCAL);
-		if ((options.allow_tcp_forwarding & FORWARD_REMOTE) == 0)
+		if ((options.allow_tcp_forwarding & FORWARD_REMOTE) == 0 &&
+		    (options.allow_streamlocal_forwarding & FORWARD_REMOTE) == 0)
 			channel_disable_admin(ssh, FORWARD_REMOTE);
 		else
 			channel_permit_all(ssh, FORWARD_REMOTE);
